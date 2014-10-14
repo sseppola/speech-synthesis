@@ -43,7 +43,7 @@
         }
       }
     };
-    
+
     reduce(text, 0);
 
     var result = [];
@@ -74,7 +74,7 @@
     /**
      * SpeechSynthesisUtterance Attributes
      */
-    
+
     this.text = text || '';
     this.lang = document.documentElement.lang || 'en-US';
     this.volume = 1.0; // 0 to 1
@@ -86,7 +86,7 @@
     /**
      * SpeechSynthesisUtterance Events
      */
-    
+
     this.onstart = undefined;
     this.onend = undefined;
     this.onerror = undefined;
@@ -102,7 +102,7 @@
     /**
      * Private parts
      */
-    
+
     var that = this;
 
     var startTime;
@@ -157,7 +157,7 @@
             that.onend(event);
           }
         }
-        
+
       }, false);
 
       audio.addEventListener('error', function() {
@@ -364,12 +364,24 @@
     return nativeSpeechSynthesisSupport() ? window.SpeechSynthesisUtterance : window.SpeechSynthesisUtterancePolyfill;
   };
 
-  window.SpeechSynthesisUtterancePolyfill = SpeechSynthesisUtterancePolyfill;
-  window.speechSynthesisPolyfill = new SpeechSynthesisPolyfill();
+  if (typeof define === 'function' && define.amd) {
+    define([], function () {
+      return {
+        SpeechSynthesisUtterancePolyfill: SpeechSynthesisUtterancePolyfill,
+        speechSynthesisPolyfill: new SpeechSynthesisPolyfill(),
+        nativeSpeechSynthesisSupport: nativeSpeechSynthesisSupport,
+        getSpeechSynthesis: getSpeechSynthesis,
+        getSpeechSynthesisUtterance: getSpeechSynthesisUtterance,
+      };
+    });
+  } else {
+    window.SpeechSynthesisUtterancePolyfill = SpeechSynthesisUtterancePolyfill;
+    window.speechSynthesisPolyfill = new SpeechSynthesisPolyfill();
 
-  window.nativeSpeechSynthesisSupport = nativeSpeechSynthesisSupport;
-  window.getSpeechSynthesis = getSpeechSynthesis;
-  window.getSpeechSynthesisUtterance = getSpeechSynthesisUtterance;
+    window.nativeSpeechSynthesisSupport = nativeSpeechSynthesisSupport;
+    window.getSpeechSynthesis = getSpeechSynthesis;
+    window.getSpeechSynthesisUtterance = getSpeechSynthesisUtterance;
+  }
 
 })(window, document);
 
