@@ -6,6 +6,7 @@
   "globals": {
     "window": true,
     "document": true,
+    "define": true,
     "Audio": true,
     "describe": true,
     "it": true,
