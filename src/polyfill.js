@@ -1,6 +1,16 @@
 (function(window, document){
   'use strict';
 
+  var audio_test;
+  try {
+    audio_test = new Audio();
+  } catch (err) {
+    console.error(err);
+  }
+  if (typeof audio_test === 'undefined') {
+    return;
+  }
+
   var splitText = function(text, delimeters, limit){
     var sentences = [];
 
@@ -125,7 +135,12 @@
     this._initAudio = function(){
       var sentences = [];
       that._ended = false;
-      var audio = new Audio();
+      var audio;
+      try {
+        audio = new Audio();
+      } catch (err) {
+        console.error(err);
+      }
 
       audio.addEventListener('play', function() {
         updateElapsedTime();
@@ -222,8 +237,14 @@
      */
 
     var that = this;
-    var audio = new Audio();
     var utteranceQueue = [];
+
+    var audio;
+    try {
+      audio = new Audio();
+    } catch (err) {
+      console.error(err);
+    }
 
     var playNext = function(utteranceQueue){
       var SpeechSynthesisUtterancePolyfill = utteranceQueue.shift();
