@@ -4,9 +4,8 @@
   var audio_test;
   try {
     audio_test = new Audio();
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) {}
+
   if (typeof audio_test === 'undefined') {
     return;
   }
@@ -138,9 +137,7 @@
       var audio;
       try {
         audio = new Audio();
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
 
       audio.addEventListener('play', function() {
         updateElapsedTime();
